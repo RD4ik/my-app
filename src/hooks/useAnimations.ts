@@ -44,7 +44,7 @@ export const useAnimations = (
       })
   }, [containerRef, setShowBackground])
 
-  // Анимация фона (увеличение нижнего отступа)
+  // Анимация фона
   const animateBackground = useCallback(() => {
     if (!backgroundRef.current) return
     const tl = gsap.timeline()

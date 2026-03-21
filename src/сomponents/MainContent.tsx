@@ -47,12 +47,10 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       requestAnimationFrame(() => {
         if (blackCircleRef.current) blackCircleRef.current.style.clipPath = ''
 
-        // Скрываем основные кнопки
         if (buttonsRef.current) {
           gsap.set(buttonsRef.current, { opacity: 0, scale: 0, pointerEvents: 'none', userSelect: 'none' })
         }
 
-        // Устанавливаем финальное состояние фона
         if (backgroundRef.current) {
           gsap.set(backgroundRef.current, {
             scale: 1.04,
@@ -62,7 +60,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
           })
         }
 
-        // Скрываем текст (на случай, если класс hidden не успел примениться)
         if (textRef.current) {
           gsap.set(textRef.current, { opacity: 0, scale: 0, pointerEvents: 'none', userSelect: 'none' })
         }

@@ -12,7 +12,6 @@
 
 .program-card {
     background: rgba(30, 30, 30, 0.7);
-    /* полупрозрачный тёмный фон */
     backdrop-filter: blur(8px);
     border-radius: 24px;
     padding: 20px;
