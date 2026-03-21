@@ -1,0 +1,16 @@
+.typewriter-container {
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.typewriter-text {
+    white-space: nowrap;
+    overflow-x: auto;
+    word-break: keep-all;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+}
