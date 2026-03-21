@@ -11,7 +11,7 @@ export const useAnimations = (
   setShowButtons: (value: boolean) => void,
   setSelectedRole: (role: 'student' | 'teacher' | null) => void,
 ) => {
-  // Анимация подъёма текста
+  //Анимация подъёма текста
   const animateTextRise = useCallback(() => {
     if (!containerRef.current) return
     const tl = gsap.timeline()
@@ -44,7 +44,7 @@ export const useAnimations = (
       })
   }, [containerRef, setShowBackground])
 
-  // Анимация фона
+  // анимация фона
   const animateBackground = useCallback(() => {
     if (!backgroundRef.current) return
     const tl = gsap.timeline()
@@ -56,10 +56,25 @@ export const useAnimations = (
     tl.call(() => setShowButtons(true), [], '-=0.5')
   }, [backgroundRef, setShowButtons])
 
-  // Анимация появления кнопок
+  //анимация появления кнопок
   const animateButtons = useCallback(() => {
     if (!buttonsRef.current) return
-    gsap.fromTo(buttonsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+    gsap.fromTo(
+      buttonsRef.current,
+      { opacity: 0, scale: 0.5, pointerEvents: 'none', userSelect: 'none' },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'elastic.out(0.5, 0.5)',
+        onComplete: () => {
+          if (buttonsRef.current) {
+            buttonsRef.current.style.pointerEvents = 'auto'
+            buttonsRef.current.style.userSelect = 'auto'
+          }
+        },
+      },
+    )
   }, [buttonsRef])
 
   // Анимация схлопывания и закрашивания при выборе роли

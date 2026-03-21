@@ -39,7 +39,14 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
     setSelectedRole,
   )
 
-  // Загрузка сохранённой роли при монтировании
+  //Скрытие кнопок при первом заходе
+  useEffect(() => {
+    if (showWelcome && buttonsRef.current) {
+      gsap.set(buttonsRef.current, { opacity: 0, pointerEvents: 'none', userSelect: 'none' })
+    }
+  }, [showWelcome])
+
+  // Загрузка сохранённой роли
   useEffect(() => {
     const savedRole = localStorage.getItem('selectedRole') as 'student' | 'teacher' | null
     if (savedRole && !showWelcome) {
@@ -50,7 +57,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
         if (buttonsRef.current) {
           gsap.set(buttonsRef.current, { opacity: 0, scale: 0, pointerEvents: 'none', userSelect: 'none' })
         }
-
         if (backgroundRef.current) {
           gsap.set(backgroundRef.current, {
             scale: 1.04,
@@ -59,7 +65,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
             transformOrigin: 'top',
           })
         }
-
         if (textRef.current) {
           gsap.set(textRef.current, { opacity: 0, scale: 0, pointerEvents: 'none', userSelect: 'none' })
         }
@@ -67,7 +72,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
     }
   }, [showWelcome])
 
-  // Установка начальных положений при повторном визите без выбранной роли
   useEffect(() => {
     if (!showWelcome && !selectedRole) {
       if (containerRef.current) gsap.set(containerRef.current, { y: -250 })
@@ -77,8 +81,12 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
           transformOrigin: 'top',
         })
       }
-      if (buttonsRef.current) gsap.set(buttonsRef.current, { opacity: 1, y: 0 })
-      if (blackCircleRef.current) gsap.set(blackCircleRef.current, { clipPath: 'circle(0% at 50% 30%)' })
+      if (buttonsRef.current) {
+        gsap.set(buttonsRef.current, { opacity: 1, scale: 1, y: 0 })
+      }
+      if (blackCircleRef.current) {
+        gsap.set(blackCircleRef.current, { clipPath: 'circle(0% at 50% 30%)' })
+      }
       if (textRef.current) {
         textRef.current.style.pointerEvents = ''
         textRef.current.style.userSelect = ''
@@ -122,34 +130,10 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
     if (textRef.current) {
       textRef.current.style.pointerEvents = ''
       textRef.current.style.userSelect = ''
-      textRef.current.style.opacity = ''
-      textRef.current.style.transform = ''
     }
     if (buttonsRef.current) {
       buttonsRef.current.style.pointerEvents = ''
       buttonsRef.current.style.userSelect = ''
-      buttonsRef.current.style.opacity = ''
-      buttonsRef.current.style.transform = ''
-    }
-
-    gsap.set(backgroundRef.current, {
-      backgroundColor: 'rgb(27, 27, 27)',
-      scale: 1.04,
-      boxShadow: '0px 0px 20px 8px #181e23ff',
-    })
-    gsap.set(blackCircleRef.current, {
-      clipPath: 'circle(150% at 50% 30%)',
-    })
-
-    const parentsToRestore: HTMLElement[] = []
-    let parent = blackCircleRef.current.parentElement
-    while (parent && parent !== document.body) {
-      const overflow = getComputedStyle(parent).overflow
-      if (overflow === 'hidden') {
-        gsap.set(parent, { overflow: 'visible' })
-        parentsToRestore.push(parent)
-      }
-      parent = parent.parentElement
     }
 
     const tl = gsap.timeline({
@@ -159,33 +143,34 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
         setShowBackground(true)
         setIsRaised(true)
 
-        gsap.set(blackCircleRef.current, { clearProps: 'all' })
-        gsap.set(backgroundRef.current, { clearProps: 'all' })
-        gsap.set(textRef.current, { clearProps: 'all' })
-        gsap.set(buttonsRef.current, { clearProps: 'all' })
+        if (blackCircleRef.current) {
+          gsap.set(blackCircleRef.current, { clipPath: 'circle(0% at 50% 30%)' })
+        }
+        if (backgroundRef.current) {
+          gsap.set(backgroundRef.current, {
+            backgroundColor: 'rgb(236, 243, 245, 0.98)',
+            scale: 1,
+            boxShadow: '0px 0px 20px 8px #354e61',
+          })
+        }
 
         blackCircleRef.current?.classList.remove('active')
         backgroundRef.current?.classList.remove('active')
 
         if (textRef.current) {
-          textRef.current.style.opacity = ''
-          textRef.current.style.transform = ''
           textRef.current.style.pointerEvents = ''
           textRef.current.style.userSelect = ''
         }
         if (buttonsRef.current) {
-          buttonsRef.current.style.opacity = ''
-          buttonsRef.current.style.transform = ''
           buttonsRef.current.style.pointerEvents = ''
           buttonsRef.current.style.userSelect = ''
         }
-
-        parentsToRestore.forEach((p) => gsap.set(p, { overflow: '' }))
 
         setIsReversing(false)
       },
     })
 
+    // Анимация фона
     tl.to(
       backgroundRef.current,
       {
@@ -198,6 +183,7 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       0,
     )
 
+    // Анимация сжатия круга
     tl.to(
       blackCircleRef.current,
       {
@@ -208,6 +194,7 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       0,
     )
 
+    // Появление текста
     tl.fromTo(
       textRef.current,
       { opacity: 0, scale: 0 },
@@ -215,6 +202,7 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       '-=0.24',
     )
 
+    // Появление кнопок
     if (buttonsRef.current) {
       tl.fromTo(
         buttonsRef.current,

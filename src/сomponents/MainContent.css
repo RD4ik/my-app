@@ -76,6 +76,7 @@
     font-weight: 900;
 }
 
+
 .buttons {
     display: flex;
     flex-direction: column;
@@ -135,9 +136,4 @@
 
 .back-button:hover {
     background-color: rgba(255, 255, 255, 0.2);
-}
-
-.back-button,
-.search {
-    pointer-events: auto !important;
 }
