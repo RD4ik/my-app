@@ -1,17 +1,19 @@
-import gsap from 'gsap'
+﻿import gsap from 'gsap'
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import AnimatedText from './AnimatedText'
-import ButtonsBlock from './ButtonsBlock'
-import ProgramsGrid, { Program } from './ProgramsGrid'
-
-import { useAnimations } from '../hooks/useAnimations'
+import { useAnimations } from '../features/graph/hooks/useAnimations'
+import ProgramsGrid, { Program } from '../programs/components/ProgramsGrid'
+import coursesData from '../programs/data/courses-test.json'
+import AnimatedText from '../shared/ui/AnimatedText/AnimatedText'
+import ButtonsBlock from '../shared/ui/Button/ButtonsBlock'
 import './MainContent.css'
 
 interface MainContentProps {
   showWelcome: boolean
 }
+
+const programsData: Program[] = coursesData as Program[]
 
 const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
   const navigate = useNavigate()
@@ -19,7 +21,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
   const [showButtons, setShowButtons] = useState(!showWelcome)
   const [showBackground, setShowBackground] = useState(!showWelcome)
   const [selectedRole, setSelectedRole] = useState<'student' | 'teacher' | null>(null)
-  const [programs, setPrograms] = useState<Program[]>([])
   const [isReversing, setIsReversing] = useState(true)
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -39,14 +40,12 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
     setSelectedRole,
   )
 
-  //Скрытие кнопок при первом заходе
   useEffect(() => {
     if (showWelcome && buttonsRef.current) {
       gsap.set(buttonsRef.current, { opacity: 0, pointerEvents: 'none', userSelect: 'none' })
     }
   }, [showWelcome])
 
-  // Загрузка сохранённой роли
   useEffect(() => {
     const savedRole = localStorage.getItem('selectedRole') as 'student' | 'teacher' | null
     if (savedRole && !showWelcome) {
@@ -98,29 +97,17 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
     }
   }, [showWelcome, selectedRole])
 
-  // запуск анимации фона
   useEffect(() => {
     if (showBackground && showWelcome && !selectedRole && isReversing) {
       animateBackground()
     }
   }, [showBackground, animateBackground, showWelcome, selectedRole, isReversing])
 
-  // запуск анимации кнопок
   useEffect(() => {
     if (showButtons && showWelcome && !selectedRole && isReversing) {
       animateButtons()
     }
   }, [showButtons, animateButtons, showWelcome, selectedRole, isReversing])
-
-  // загрузка программ
-  useEffect(() => {
-    const fetchPrograms = async () => {
-      const response = await fetch('/api/programs')
-      const data = await response.json()
-      setPrograms(data)
-    }
-    fetchPrograms()
-  }, [])
 
   const reverseCollapse = useCallback(() => {
     if (!blackCircleRef.current || !backgroundRef.current || !textRef.current) return
@@ -170,7 +157,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       },
     })
 
-    // Анимация фона
     tl.to(
       backgroundRef.current,
       {
@@ -183,7 +169,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       0,
     )
 
-    // Анимация сжатия круга
     tl.to(
       blackCircleRef.current,
       {
@@ -194,7 +179,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       0,
     )
 
-    // Появление текста
     tl.fromTo(
       textRef.current,
       { opacity: 0, scale: 0 },
@@ -202,7 +186,6 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       '-=0.24',
     )
 
-    // Появление кнопок
     if (buttonsRef.current) {
       tl.fromTo(
         buttonsRef.current,
@@ -232,7 +215,7 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
   }
 
   const handleTeacherClick = () => {
-    navigate('/teacher')
+    navigate('/main')
   }
 
   const handleBackClick = () => {
@@ -244,15 +227,18 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
     <div ref={containerRef} className='main-content'>
       <div ref={backgroundRef} className={`main-content-background ${selectedRole ? 'active' : ''}`}>
         <div ref={blackCircleRef} className={`black-circle ${selectedRole ? 'active' : ''}`}>
-          {selectedRole === 'student' && (
+          <div
+            className={`student-content ${selectedRole === 'student' ? 'active' : ''}`}
+            aria-hidden={selectedRole !== 'student'}
+          >
             <div className='student-choice'>
               <button onClick={handleBackClick} className='back-button'>
                 Back
               </button>
               <input type='search' className='search' id='site-search' name='q' />
             </div>
-          )}
-          {selectedRole === 'student' && programs.length > 0 && <ProgramsGrid programs={programs} />}
+            {programsData.length > 0 && <ProgramsGrid programs={programsData} />}
+          </div>
         </div>
       </div>
 

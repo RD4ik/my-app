@@ -1,0 +1,21 @@
+.node {
+    display: inline-block;
+    max-width: 100%;
+    background-color: #F2F2F2;
+    border: 1px solid #000000;
+    border-radius: 20px;
+}
+
+.node-item {
+    margin: 12px 8px 0px 8px;
+    background-color: #FFFFFF;
+    padding: 8px 50px;
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+
+.node-disc {
+    display: flex;
+    margin-bottom: 12px;
+}

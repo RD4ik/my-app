@@ -1,0 +1,177 @@
+.main-content {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  padding: 40px 60px;
+  z-index: 10;
+}
+
+.main-content-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(236, 243, 245, 0.98);
+  border-radius: 30px;
+  box-shadow: 0px 0px 20px 8px #354e61;
+  z-index: 0;
+  transform-origin: top;
+  overflow: hidden;
+  will-change: transform, box-shadow, background-color;
+}
+
+.main-content-background.active {
+  box-shadow: 0px 0px 20px 8px #181e23ff;
+  background-color: rgb(27, 27, 27);
+}
+
+.black-circle {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  background-color: rgb(27, 27, 27);
+  border-radius: 38px;
+  clip-path: circle(0% at 50% 50%);
+  z-index: 2;
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+.black-circle.active {
+  clip-path: circle(170% at 50% 30%);
+}
+
+.text-container,
+.buttons-block {
+  position: relative;
+  z-index: 3;
+  will-change: transform, opacity;
+}
+
+.student-content {
+  position: absolute;
+  inset: 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform-origin: top center;
+  will-change: transform, opacity;
+}
+
+.student-content.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.student-choice {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.student-choice>* {
+  pointer-events: auto;
+}
+
+.text-container.hidden {
+  opacity: 0;
+  scale: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.after-animation {
+  box-shadow: 0px 0px 20px 8px #354e61;
+}
+
+.modal-group {
+  position: absolute;
+}
+
+.Modal-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.modal-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.subtitle {
+  margin-bottom: 11%;
+  font-size: 40px;
+  text-align: center;
+  font-weight: 900;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.Modal-button {
+  width: 100%;
+  padding: 45px 30px;
+  text-align: left;
+  border: none;
+  border-radius: 30px;
+  background-color: #d1d6d7;
+
+  font-family: 'Jura', sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.Modal-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0 15px 2px #858484;
+}
+
+.search {
+  position: absolute;
+  top: 30px;
+  left: 150px;
+  z-index: 20;
+  padding: 11px;
+  width: 81%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid white;
+  color: white;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.back-button {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 10px 35px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.black-circle button {
+  z-index: 10;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

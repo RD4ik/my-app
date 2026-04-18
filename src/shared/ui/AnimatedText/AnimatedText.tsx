@@ -1,4 +1,4 @@
-import TypewriterText from './TypewriterText'
+import TypewriterText from '../TypewriterText/TypewriterText'
 
 import './AnimatedText.css'
 

@@ -11,7 +11,6 @@ export const useAnimations = (
   setShowButtons: (value: boolean) => void,
   setSelectedRole: (role: 'student' | 'teacher' | null) => void,
 ) => {
-  //Анимация подъёма текста
   const animateTextRise = useCallback(() => {
     if (!containerRef.current) return
     const tl = gsap.timeline()
@@ -44,7 +43,6 @@ export const useAnimations = (
       })
   }, [containerRef, setShowBackground])
 
-  // анимация фона
   const animateBackground = useCallback(() => {
     if (!backgroundRef.current) return
     const tl = gsap.timeline()
@@ -56,7 +54,6 @@ export const useAnimations = (
     tl.call(() => setShowButtons(true), [], '-=0.5')
   }, [backgroundRef, setShowButtons])
 
-  //анимация появления кнопок
   const animateButtons = useCallback(() => {
     if (!buttonsRef.current) return
     gsap.fromTo(
@@ -77,7 +74,6 @@ export const useAnimations = (
     )
   }, [buttonsRef])
 
-  // Анимация схлопывания и закрашивания при выборе роли
   const collapseBackground = useCallback(
     (role: 'student' | 'teacher') => {
       if (!backgroundRef.current || !textRef.current) return
@@ -125,7 +121,7 @@ export const useAnimations = (
         .to(
           blackCircleRef.current,
           {
-            clipPath: 'circle(150% at 50% 30%)',
+            clipPath: 'circle(170% at 50% 30%)',
             duration: 1,
             ease: 'power2.inOut',
           },
@@ -136,10 +132,10 @@ export const useAnimations = (
           {
             scale: 1.04,
             boxShadow: '0px 0px 20px 8px #181e23ff',
-            duration: 3,
+            duration: 5,
             ease: 'elastic.out(0.5, 0.3)',
           },
-          '-=0.7',
+          '-=1.2',
         )
     },
     [backgroundRef, buttonsRef, textRef, blackCircleRef, setSelectedRole],
