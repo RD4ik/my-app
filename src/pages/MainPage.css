@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .main-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: 'Montserrat', sans-serif;
+
+    background-color: #201F21;
+
+    color: #696869
 }
 
 .main-page button {
@@ -17,7 +24,7 @@
     padding: 20px clamp(20px, 4vw, 100px);
     font-weight: 500;
 
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid #b0b0aa;
 }
 
 .main-nav img {
@@ -29,6 +36,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 18px;
+
+    color: #b0b0aa;
 }
 
 .main-nav_right button,
@@ -36,11 +45,13 @@
     padding: 12px 10px;
     border-radius: 8px;
     transition: background-color 0.2s;
+
+    font-weight: 700;
 }
 
 .main-nav_right button:hover,
 .main-nav_left button:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .main-nav_right {
@@ -53,9 +64,23 @@
     flex: 0 0 auto;
 }
 
+.main-body {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
 .title {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    z-index: 0;
     text-align: center;
-    margin-top: 30px;
+    margin: 0;
+    transform: translateX(-50%);
+    color: #b0b0aa;
+    pointer-events: none;
 }
 
 .draggable-graph {
@@ -68,7 +93,12 @@
 }
 
 .aside {
-    border: 1px solid #8f8c8c;
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border: 1px solid #272527;
     border-radius: 10px;
     margin: 20px 80px;
     max-width: 370px;
@@ -78,7 +108,7 @@
     will-change: transform;
     touch-action: none;
 
-    background-color: #fff;
+    background-color: #181718;
 }
 
 .aside.dragging {
@@ -96,7 +126,7 @@
     flex: 1 1 auto;
     padding: 0 20px;
     box-sizing: border-box;
-    background-color: #D9D9D9;
+    background-color: #262526;
     border: none;
     border-radius: 10px;
     cursor: text;
@@ -144,8 +174,6 @@
     display: block;
     text-align: left;
     max-width: 200px;
-
-    font-size: 16px;
 }
 
 .program-subtitle {
@@ -162,4 +190,10 @@
     background-color: #000;
     color: #fff;
     border-radius: 10px;
+}
+
+@media (max-width: 900px) {
+    .aside {
+        margin: 20px 16px;
+    }
 }

@@ -122,7 +122,7 @@ export const useAnimations = (
           blackCircleRef.current,
           {
             clipPath: 'circle(170% at 50% 30%)',
-            duration: 1,
+            duration: 1.5,
             ease: 'power2.inOut',
           },
           '-=0.5',
@@ -135,7 +135,7 @@ export const useAnimations = (
             duration: 5,
             ease: 'elastic.out(0.5, 0.3)',
           },
-          '-=1.2',
+          '-=1.7',
         )
     },
     [backgroundRef, buttonsRef, textRef, blackCircleRef, setSelectedRole],

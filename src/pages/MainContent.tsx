@@ -163,7 +163,7 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
         backgroundColor: 'rgb(236, 243, 245, 0.98)',
         scale: 1,
         boxShadow: '0px 0px 20px 8px #354e61',
-        duration: 1,
+        duration: 1.5,
         ease: 'power2.inOut',
       },
       0,
@@ -173,7 +173,7 @@ const MainContent: React.FC<MainContentProps> = ({ showWelcome }) => {
       blackCircleRef.current,
       {
         clipPath: 'circle(0% at 50% 30%)',
-        duration: 1,
+        duration: 1.5,
         ease: 'power2.inOut',
       },
       0,
